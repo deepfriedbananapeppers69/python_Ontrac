@@ -16,7 +16,7 @@ class tracgame:
         self.Desert = ["BKY","GEG","BOI","PHX","CDC","RNO","COS","TRI","DIA","TUC","FLG","UTA","BFL","VEG","VIS","FAT"]
         self.Vancouver = ["VAN"]
         self.Seattle = ["SEA","SEZ"]
-        self.fullList = self.SoCal + self.NoCal + self.Desert
+        self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle
         self.choice = random.choice(self.fullList)
         
         # This is the GUI 
