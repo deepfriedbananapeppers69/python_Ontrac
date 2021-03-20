@@ -16,7 +16,8 @@ class tracgame:
         self.Desert = ["BKY","GEG","BOI","PHX","CDC","RNO","COS","TRI","DIA","TUC","FLG","UTA","BFL","VEG","VIS","FAT"]
         self.Vancouver = ["VAN"]
         self.Seattle = ["SEA","SEZ"]
-        self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle
+        self.Other = ["TAC","EUG","MED"]
+        self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
         self.choice = random.choice(self.fullList)
         
         # This is the GUI 
@@ -31,7 +32,7 @@ class tracgame:
         self.Lives.set(" You have Lives: " + (str(self.lives)) + " left") 
 
         self.pickchoice = StringVar()
-        self.pickchoice.set(" Area Code: " + str(self.choice))
+        self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
 
         self.numberscore = StringVar()
         self.numberscore.set("Your Score: " + str(self.score))
@@ -65,6 +66,9 @@ class tracgame:
 
         self.nocalbutton = Button(frame, text="Vancouver",width= 10, height= 2 ,command=self.VANCOUVERCHECK)
         self.nocalbutton.pack(side=RIGHT, pady=2, padx=2)
+
+        self.nocalbutton = Button(frame, text="Other",width= 10, height= 2 ,command=self.OTHERCHECK)
+        self.nocalbutton.pack(side=RIGHT, pady=2, padx=2)
         
         # end of GUI
         # -----------------------------------------
@@ -78,7 +82,7 @@ class tracgame:
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
             self.choice = random.choice(self.fullList)
-            self.pickchoice.set(" Area Code: " + str(self.choice))
+            self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
         else: 
             self.score =  self.score - 1
             self.lives = self.lives - 1
@@ -87,7 +91,7 @@ class tracgame:
             self.Lives.set(" You have Lives: " + (str(self.lives)) + " left") 
         if self.lives <= 0:
             root.destroy()
-
+ 
     def SOCALCHECK (self):
         answer = self.choice
         if answer in self.SoCal:
@@ -95,7 +99,7 @@ class tracgame:
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
             self.choice = random.choice(self.fullList)
-            self.pickchoice.set(" Area Code: " + str(self.choice))
+            self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
         else: 
             self.score =  self.score - 1
             self.lives = self.lives - 1
@@ -112,7 +116,7 @@ class tracgame:
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
             self.choice = random.choice(self.fullList)
-            self.pickchoice.set(" Area Code: " + str(self.choice))
+            self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
         else: 
             self.score =  self.score - 1
             self.lives = self.lives - 1
@@ -121,6 +125,7 @@ class tracgame:
             self.Lives.set(" You have Lives: " + (str(self.lives)) + " left") 
         if self.lives <= 0:
             root.destroy()
+
     def VANCOUVERCHECK (self):  
         answer = self.choice
         if answer in self.Vancouver:
@@ -128,7 +133,7 @@ class tracgame:
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
             self.choice = random.choice(self.fullList)
-            self.pickchoice.set(" Area Code: " + str(self.choice))
+            self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
         else: 
             self.score =  self.score - 1
             self.lives = self.lives - 1
@@ -137,6 +142,7 @@ class tracgame:
             self.Lives.set(" You have Lives: " + (str(self.lives)) + " left") 
         if self.lives <= 0:
             root.destroy()
+            
     def SEATTLECHECK (self):
         answer = self.choice
         if answer in self.Seattle:
@@ -144,7 +150,23 @@ class tracgame:
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
             self.choice = random.choice(self.fullList)
-            self.pickchoice.set(" Area Code: " + str(self.choice))
+            self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+        else: 
+            self.score =  self.score - 1
+            self.lives = self.lives - 1
+            self.numberscore.set("Your Score: " + str(self.score))
+            self.text.set("Your Answer is: not correct")
+            self.Lives.set(" You have Lives: " + (str(self.lives)) + " left") 
+        if self.lives <= 0:
+            root.destroy()
+    def OTHERCHECK (self):
+        answer = self.choice
+        if answer in self.Other:
+            self.score =  self.score + 1
+            self.numberscore.set("Your Score: " + str(self.score))
+            self.text.set("Your Answer is: correct")
+            self.choice = random.choice(self.fullList)
+            self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
         else: 
             self.score =  self.score - 1
             self.lives = self.lives - 1
