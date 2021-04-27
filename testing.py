@@ -4,6 +4,7 @@ import tkinter as tk
 from tkinter import font as tkfont
 from tkinter.constants import END, LEFT, RIGHT
 
+#this part is where the frames are staged and change
 class SampleApp(tk.Tk):
 
     def __init__(self,*args, **kwargs):
@@ -39,7 +40,7 @@ class SampleApp(tk.Tk):
         frame.tkraise()
   
 
-
+#this is the starting window
 class startwindow(tk.Frame):
 
     def __init__(self,master,controller):
@@ -64,7 +65,7 @@ class startwindow(tk.Frame):
         
 
     
-
+#this is the game 
 class tracgame(tk.Frame):
 
     def __init__(self, master,controller):
@@ -74,6 +75,7 @@ class tracgame(tk.Frame):
         self.controller = controller
         self.lives = 3
         self.score = 0
+        self.yourscore = 0
         self.highscore = 0
         self.SoCal = ["ANA","PSP","BNS","LAX","BUR","ONT","COM","ORG","CPT","SAN","CXL","SMX","FON","VNS","HBC","WHP","JPD","YUM","JSG"]
         self.NoCal = ["CCR","PET","EUR","RED","HAY","SAC","MLO","SFO","MRY","SJC","STK"]
@@ -144,6 +146,7 @@ class tracgame(tk.Frame):
         answer = self.choice
         if answer in self.NoCal:
             self.score =  self.score + 1
+            self.yourscore = self.score 
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
             self.choice = random.choice(self.fullList)
@@ -170,6 +173,7 @@ class tracgame(tk.Frame):
         answer = self.choice
         if answer in self.SoCal:
             self.score =  self.score + 1
+            self.yourscore = self.score 
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
             self.choice = random.choice(self.fullList)
@@ -195,6 +199,7 @@ class tracgame(tk.Frame):
         answer = self.choice
         if answer in self.Desert:
             self.score =  self.score + 1
+            self.yourscore = self.score 
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
             self.choice = random.choice(self.fullList)
@@ -220,6 +225,7 @@ class tracgame(tk.Frame):
         answer = self.choice
         if answer in self.Vancouver:
             self.score =  self.score + 1
+            self.yourscore = self.score 
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
             self.choice = random.choice(self.fullList)
@@ -244,6 +250,7 @@ class tracgame(tk.Frame):
         answer = self.choice
         if answer in self.Seattle:
             self.score =  self.score + 1
+            self.yourscore = self.score 
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
             self.choice = random.choice(self.fullList)
@@ -269,6 +276,7 @@ class tracgame(tk.Frame):
         answer = self.choice
         if answer in self.Other:
             self.score =  self.score + 1
+            self.yourscore = self.score 
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
             self.choice = random.choice(self.fullList)
@@ -291,17 +299,20 @@ class tracgame(tk.Frame):
             self.controller.show_frame("endwindow")
 
     
-
+#this is the page after the 3 incorect answers 
 
 class endwindow(tk.Frame):
 
     def __init__(self,master,controller):
         tk.Frame.__init__(self,master)
-        into = tracgame(master,controller)
+        #into = tracgame(master,controller)
         self.controller = controller
+        #self.score = into.yourscore
+        #self.label2 = tk.Label(self, text="Your score was " + str(self.score))
         self.label1 = tk.Label(self, text="OOPS!!!! you got to many mistake but you can retry")
         self.Button1 = tk.Button(self,text="RETRY",command=lambda: self.controller.show_frame("tracgame"),width=10,height=2,bg="green")
         self.label1.pack()
+        #self.label2.pack()
         self.Button1.pack()
         
 
