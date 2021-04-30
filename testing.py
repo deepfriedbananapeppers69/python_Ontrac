@@ -21,7 +21,7 @@ class SampleApp(tk.Tk):
         #container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (startwindow,tracgame,endwindow):
+        for F in (startwindow,tracgame,endwindow,winwindow):
             page_name = F.__name__
             frame = F(master=container, controller=self)
             self.frames[page_name] = frame
@@ -77,15 +77,21 @@ class tracgame(tk.Frame):
         self.score = 0
         self.yourscore = 0
         self.highscore = 0
+        self.index = 0 
         self.SoCal = ["ANA","PSP","BNS","LAX","BUR","ONT","COM","ORG","CPT","SAN","CXL","SMX","FON","VNS","HBC","WHP","JPD","YUM","JSG"]
         self.NoCal = ["CCR","PET","EUR","RED","HAY","SAC","MLO","SFO","MRY","SJC","STK"]
         self.Desert = ["BKY","GEG","BOI","PHX","CDC","RNO","COS","TRI","DIA","TUC","FLG","UTA","BFL","VEG","VIS","FAT"]
         self.Vancouver = ["VAN","SLE"]
         self.Seattle = ["SEA","SEZ"]
         self.Other = ["TAC","EUG","MED"]
+        self.checklist = []
         self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
         self.choice = random.choice(self.fullList)
         
+
+        if self.fullList == []:
+                self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
+                self.controller.show_frame("winwindow")
 
         # This is the GUI 
         # ---------------------------------------
@@ -145,18 +151,24 @@ class tracgame(tk.Frame):
     def NOCALCHECK (self,):
         answer = self.choice
         if answer in self.NoCal:
+            if self.fullList == []:
+                self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
+                self.controller.show_frame("winwindow")
             self.score =  self.score + 1
             self.yourscore = self.score 
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
+            self.fullList.remove(answer)
             self.choice = random.choice(self.fullList)
             self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+            
         else: 
             self.score =  self.score - 1
             if self.score < 0:
                 self.score = 0
             self.lives = self.lives - 1
-            if self.lives <= 0:
+            if self.lives <= 0 or self.fullList == []:
+                self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.lives = 3
                 self.score = 0
                 self.text.set("")
@@ -172,18 +184,24 @@ class tracgame(tk.Frame):
     def SOCALCHECK (self,):
         answer = self.choice
         if answer in self.SoCal:
+            if self.fullList == []:
+                self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
+                self.controller.show_frame("winwindow")
             self.score =  self.score + 1
             self.yourscore = self.score 
             self.numberscore.set("Your Score: " + str(self.score))
-            self.text.set("Your Answer is: correct")
+            self.text.set("Your Answer is: correct")          
+            self.fullList.remove(answer)
             self.choice = random.choice(self.fullList)
             self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+           
         else: 
             self.score =  self.score - 1
             if self.score < 0:
                 self.score = 0
             self.lives = self.lives - 1
-            if self.lives <= 0:
+            if self.lives <= 0 or self.fullList == []:
+                self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.lives = 3
                 self.score = 0
                 self.text.set("")
@@ -198,18 +216,25 @@ class tracgame(tk.Frame):
     def DESERTCHECK (self):
         answer = self.choice
         if answer in self.Desert:
+            if self.fullList == []:
+                self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
+                self.controller.show_frame("winwindow")
             self.score =  self.score + 1
             self.yourscore = self.score 
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
+            self.fullList.remove(answer)
             self.choice = random.choice(self.fullList)
             self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+            if self.fullList == []:
+                self.controller.show_frame("winwindow")
         else: 
             self.score =  self.score - 1
             if self.score < 0:
                 self.score = 0
             self.lives = self.lives - 1
-            if self.lives <= 0:
+            if self.lives <= 0 or self.fullList == []:
+                self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.lives = 3
                 self.score = 0
                 self.text.set("")
@@ -224,18 +249,25 @@ class tracgame(tk.Frame):
     def VANCOUVERCHECK (self):  
         answer = self.choice
         if answer in self.Vancouver:
+            if self.fullList == []:
+                self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
+                self.controller.show_frame("winwindow")
             self.score =  self.score + 1
             self.yourscore = self.score 
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
+            self.fullList.remove(answer)
             self.choice = random.choice(self.fullList)
             self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+            if self.fullList == []:
+                self.controller.show_frame("winwindow")
         else: 
             self.score =  self.score - 1
             if self.score < 0:
                 self.score = 0
             self.lives = self.lives - 1
-            if self.lives <= 0:
+            if self.lives <= 0 or self.fullList == []:
+                self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.lives = 3
                 self.score = 0
                 self.text.set("")
@@ -249,18 +281,25 @@ class tracgame(tk.Frame):
     def SEATTLECHECK (self):
         answer = self.choice
         if answer in self.Seattle:
+            if self.fullList == []:
+                self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
+                self.controller.show_frame("winwindow")
             self.score =  self.score + 1
             self.yourscore = self.score 
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
+            self.fullList.remove(answer)
             self.choice = random.choice(self.fullList)
             self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+            if self.fullList == []:
+                self.controller.show_frame("winwindow")
         else: 
             self.score =  self.score - 1
             if self.score < 0:
                 self.score = 0
             self.lives = self.lives - 1
-            if self.lives <= 0:
+            if self.lives <= 0 or self.fullList == []:
+                self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.lives = 3
                 self.score = 0
                 self.text.set("")
@@ -275,18 +314,25 @@ class tracgame(tk.Frame):
     def OTHERCHECK (self):
         answer = self.choice
         if answer in self.Other:
+            if self.fullList == []:
+                self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
+                self.controller.show_frame("winwindow")
             self.score =  self.score + 1
             self.yourscore = self.score 
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
+            self.fullList.remove(answer)
             self.choice = random.choice(self.fullList)
             self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+            if self.fullList == []:
+                self.controller.show_frame("winwindow")
         else: 
             self.score =  self.score - 1
             if self.score < 0:
                 self.score = 0
             self.lives = self.lives - 1
             if self.lives <= 0:
+                
                 self.lives = 3
                 self.score = 0
                 self.text.set("")
@@ -314,7 +360,23 @@ class endwindow(tk.Frame):
         self.label1.pack()
         #self.label2.pack()
         self.Button1.pack()
-        
+
+class winwindow(tk.Frame):
+
+    def __init__(self,master,controller):
+        tk.Frame.__init__(self,master)
+        #into = tracgame(master,controller)
+        self.controller = controller
+        #self.score = into.yourscore
+        #self.label2 = tk.Label(self, text="Your score was " + str(self.score))
+        self.label1 = tk.Label(self, text="good job you know all the area codes !!!!!!!!!!!!. You can Continue or Quit")
+        self.Button1 = tk.Button(self,text="Continue",command=lambda: self.controller.show_frame("tracgame"),width=10,height=2,bg="green")
+        self.Button2 = tk.Button(self, text="Quit",command=self.controller.quit(),width=10,height=2,bg="red")
+        self.label1.pack()
+        #self.label2.pack()
+        self.Button1.pack()
+        self.Button2.pack()
+
 
 
 def main():
