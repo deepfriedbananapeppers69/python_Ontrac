@@ -340,19 +340,18 @@ class tracgame(tk.Frame):
             if self.score < 0:
                 self.score = 0
             self.lives = self.lives - 1
+            self.numberscore.set("Your Score: " + str(self.score))
+            self.text.set("Your Answer is: not correct")
+            self.Lives.set(" You have " + (str(self.lives)) + " Lives left")
             if self.lives <= 0 or self.fullList == []:   
                 self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.lives = 3
                 self.score = 0
                 if self.lives == 3:
                     self.choice = random.choice(self.fullList)
+                    self.text.set("")
                     self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
                     self.controller.show_frame("endwindow")
-            self.numberscore.set("Your Score: " + str(self.score))
-            self.text.set("Your Answer is: not correct")
-            self.Lives.set(" You have " + (str(self.lives)) + " Lives left")
-        if self.lives <= 0:
-            self.controller.show_frame("endwindow")
    
 
 #this is the page after the 3 incorect answers 
