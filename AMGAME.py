@@ -54,24 +54,24 @@ class AMGame(tk.Frame):
         self.label1 = tk.Label(self, textvariable=self.pickchoice, font='Helvetica 15 bold')
         self.label1.pack(side=tk.TOP)
 
-        self.socalbutton = tk.Button(self, text="Green Belt",width= 10, height= 2, bg='gold' ,command=self.GREENBELTCHECK)
-        self.socalbutton.pack(side=LEFT, pady=2, padx=15)
+        self.greenbeltbutton = tk.Button(self, text="Green Belt",width= 10, height= 2, bg='gold' ,command=self.GREENBELTCHECK)
+        self.greenbeltbutton.pack(side=LEFT, pady=2, padx=15)
 
-        self.nocalbutton = tk.Button(self, text="Blue Belt",width= 10, height= 2, fg='white' , bg='blue4' ,command=self.BLUEBELTCHECK)
-        self.nocalbutton.pack(side=LEFT, pady=2, padx=15)
+        self.bluebeltbutton = tk.Button(self, text="Blue Belt",width= 10, height= 2, fg='white' , bg='blue4' ,command=self.BLUEBELTCHECK)
+        self.bluebeltbutton.pack(side=LEFT, pady=2, padx=15)
 
-        self.desertbutton = tk.Button(self, text="Red Belt",width= 10, height= 2, bg='gold',command=self.REDBELTCHECK)
-        self.desertbutton.pack(side=LEFT, pady=2, padx=15)
+        self.redbeltbutton = tk.Button(self, text="Red Belt",width= 10, height= 2, bg='gold',command=self.REDBELTCHECK)
+        self.redbeltbutton.pack(side=LEFT, pady=2, padx=15)
 
-        self.seattlebutton = tk.Button(self, text="Yellow Belt",width= 10, height= 2, fg='white' , bg='blue4' ,command=self.YELLOWBELTCHECK)
-        self.seattlebutton.pack(side=RIGHT, pady=2, padx=15)
+        self.blowbybutton = tk.Button(self, text="Blow By",width= 10, height= 2, fg='white' , bg='blue4' ,command=self.BLOWBYCHECK)
+        self.blowbybutton.pack(side=RIGHT, pady=2, padx=15)
 
-        self.vanbutton = tk.Button(self, text="Blow By",width= 10, height= 2, bg='gold' ,command=self.BLOWBYCHECK)
-        self.vanbutton.pack(side=RIGHT, pady=2, padx=15)
-
-        self.otherbutton = tk.Button(self, text="Other",width= 10, height= 2, fg='white' , bg='blue4' ,command=self.OTHERCHECK)
+        self.otherbutton = tk.Button(self, text="Other",width= 10, height= 2, bg='gold'  ,command=self.OTHERCHECK)
         self.otherbutton.pack(side=RIGHT, pady=2, padx=15)
-        
+
+        self.yellowbeltbutton = tk.Button(self, text="Yellow Belt",width= 10, height= 2, fg='white' , bg='blue4' ,command=self.YELLOWBELTCHECK)
+        self.yellowbeltbutton.pack(side=RIGHT, pady=2, padx=15)
+
         self.menubutton = tk.Button(self,text="Return To Menu",command=self.MENURETURN)
         self.menubutton.pack()
 

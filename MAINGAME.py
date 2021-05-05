@@ -61,7 +61,7 @@ class startwindow(tk.Frame):
     
         self.label1 = tk.Label(self, text="This is training for both AM and PM",font='Helvetica 12')
         self.label2 = tk.Label(self, text="HOW TO PLAY: First Pick the correct Game and get the highest score you can", font='Helvetica 10')
-        self.label3 = tk.Label(self, text="WARING: if you get to many wrong you the game will reset  ", font='Helvetica 10')
+        self.label3 = tk.Label(self, text="WARING: if you get to many wrong the game will reset  ", font='Helvetica 10')
         #self.label4 = tk.Label(self, textvariable=self.losetext)
         self.Button1 = tk.Button(self,text="PM",command=lambda: self.controller.show_frame("PMGame"),width=10,height=2,bg="gold")
         self.Button2 = tk.Button(self,text="AM",command=lambda: self.controller.show_frame("AMGame"),width=10,height=2,fg='white',bg="blue4")
