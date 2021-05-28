@@ -1,27 +1,37 @@
-import time
+
 import random 
 import tkinter as tk
 from tkinter import PhotoImage, font as tkfont
 from tkinter.constants import END, LEFT, RIGHT
+from openpyxl import workbook, load_workbook
+from openpyxl.utils import get_column_letter
 
 class PMGame(tk.Frame):
 
     def __init__(self, master,controller):
         tk.Frame.__init__(self,master)
         # Global Variables
-        # When calling these variables use .self first 
+        # When calling these variables use .self first
+        wb = load_workbook('Book1.xlsx')
+        ws = wb.active
         self.controller = controller
         self.lives = 3
         self.score = 0
         self.yourscore = 0
         self.highscore = 0
-        self.index = 0 
-        self.SoCal = ["ANA","PSP","BNS","LAX","BUR","ONT","COM","ORG","CPT","SAN","CXL","SMX","FON","VNS","HBC","WHP","JPD","YUM","JSG"]
-        self.NoCal = ["CCR","PET","EUR","RED","HAY","SAC","MLO","SFO","MRY","SJC","STK"]
-        self.Desert = ["BKY","GEG","BOI","PHX","CDC","RNO","COS","TRI","DIA","TUC","FLG","UTA","BFL","VEG","VIS","FAT"]
-        self.Vancouver = ["VAN","SLE"]
-        self.Seattle = ["SEA","SEZ"]
-        self.Other = ["TAC","EUG","MED"]
+        self.index = 0
+        ws_SoCal = ws['A']
+        ws_NoCal = ws['B']
+        ws_Desert = ws['C']
+        ws_Vancouver = ws['D']
+        ws_Seattle = ws['E']
+        ws_Other = ws['F']
+        self.SoCal = list(ws_SoCal)
+        self.NoCal = list(ws_NoCal)
+        self.Desert = list(ws_Desert)
+        self.Vancouver = list(ws_Vancouver)
+        self.Seattle = list(ws_Seattle)
+        self.Other = list(ws_Other)
         self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
         self.choice = random.choice(self.fullList)
         
@@ -30,6 +40,7 @@ class PMGame(tk.Frame):
         # This parts makes the frame and for updateing labels 
 
         self.highscoretext = tk.StringVar()
+        self.highscoretext.set("The current high score is: " + str(self.highscore))
 
         self.text = tk.StringVar()
 
@@ -37,11 +48,14 @@ class PMGame(tk.Frame):
         self.Lives.set(" You have " + (str(self.lives)) + " Lives left")
 
         self.pickchoice = tk.StringVar()
-        self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+        self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
 
         self.numberscore = tk.StringVar()
         self.numberscore.set("Your Score: " + str(self.score))
         # Main parts of the Gui that you see
+        self.label7 = tk.Label(self, textvariable=self.highscoretext,font='Helvetica 10 bold')
+        self.label7.pack(side=tk.TOP, pady=1, padx=1)
+
         self.Score = tk.Label(self, textvariable=self.numberscore,font='Helvetica 10 bold')
         self.Score.pack(side=tk.TOP, pady=1, padx=1)
 
@@ -91,11 +105,13 @@ class PMGame(tk.Frame):
             if self.fullList == []:
                 self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.choice = random.choice(self.fullList)
-                self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
+                self.highscore = self.score
+                #self.sqltalk() 
                 self.controller.show_frame("pmwinwindow")
             else:
                 self.choice = random.choice(self.fullList)
-                self.pickchoice.set(" Where does this area code belong: " + str(self.choice))         
+                self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))         
         else: 
             self.score =  self.score - 1
             self.lives = self.lives - 1
@@ -111,7 +127,7 @@ class PMGame(tk.Frame):
                 if self.lives == 3:
                     self.choice = random.choice(self.fullList)
                     self.text.set("")
-                    self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                    self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
                     self.controller.show_frame("pmendwindow")
             else:
                 self.numberscore.set("Your Score: " + str(self.score))
@@ -129,11 +145,11 @@ class PMGame(tk.Frame):
             if self.fullList == []:
                 self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.choice = random.choice(self.fullList)
-                self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
                 self.controller.show_frame("pmwinwindow")
             else:
                 self.choice = random.choice(self.fullList)
-                self.pickchoice.set(" Where does this area code belong: " + str(self.choice))          
+                self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))          
         else:
             self.score =  self.score - 1
             self.lives = self.lives - 1
@@ -148,7 +164,7 @@ class PMGame(tk.Frame):
                 if self.lives == 3:
                     self.choice = random.choice(self.fullList)
                     self.text.set("")
-                    self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                    self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
                     self.controller.show_frame("pmendwindow")
             else:
                 self.numberscore.set("Your Score: " + str(self.score))
@@ -166,10 +182,11 @@ class PMGame(tk.Frame):
             if self.fullList == []:
                 self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.choice = random.choice(self.fullList)
+                self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
                 self.controller.show_frame("pmwinwindow")
             else:
                 self.choice = random.choice(self.fullList)
-                self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
         else: 
             self.score =  self.score - 1
             self.lives = self.lives - 1
@@ -183,7 +200,7 @@ class PMGame(tk.Frame):
                 if self.lives == 3:
                     self.choice = random.choice(self.fullList)
                     self.text.set("")
-                    self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                    self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
                     self.Lives.set(" You have " + (str(self.lives)) + " Lives left")
                     self.controller.show_frame("pmendwindow")
             else:
@@ -202,10 +219,11 @@ class PMGame(tk.Frame):
             if self.fullList == []:
                 self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.choice = random.choice(self.fullList)
+                self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
                 self.controller.show_frame("pmwinwindow")
             else:
                 self.choice = random.choice(self.fullList)
-                self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
         else: 
             self.score =  self.score - 1
             self.lives = self.lives - 1
@@ -220,7 +238,7 @@ class PMGame(tk.Frame):
                 if self.lives == 3:
                     self.choice = random.choice(self.fullList)
                     self.text.set("")
-                    self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                    self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
                     self.controller.show_frame("pmendwindow")
             else:
                 self.numberscore.set("Your Score: " + str(self.score))
@@ -238,10 +256,11 @@ class PMGame(tk.Frame):
             if self.fullList == []:
                 self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.choice = random.choice(self.fullList)
+                self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
                 self.controller.show_frame("pmwinwindow")
             else:
                 self.choice = random.choice(self.fullList)
-                self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
         else: 
             self.score =  self.score - 1
             self.lives = self.lives - 1
@@ -256,7 +275,7 @@ class PMGame(tk.Frame):
                 if self.lives == 3:
                     self.choice = random.choice(self.fullList)
                     self.text.set("")
-                    self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                    self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
                     self.controller.show_frame("pmendwindow")
             else:
                 self.numberscore.set("Your Score: " + str(self.score))
@@ -274,10 +293,11 @@ class PMGame(tk.Frame):
             if self.fullList == []:
                 self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.choice = random.choice(self.fullList)
+                self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
                 self.controller.show_frame("pmwinwindow")
             else:
                 self.choice = random.choice(self.fullList)
-                self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
         else: 
             self.score =  self.score - 1
             self.lives = self.lives - 1
@@ -292,7 +312,7 @@ class PMGame(tk.Frame):
                 if self.lives == 3:
                     self.choice = random.choice(self.fullList)
                     self.text.set("")
-                    self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                    self.pickchoice.set(" Where does this area code belong: " + str(self.choice.value))
                     self.controller.show_frame("pmendwindow")  
             else:  
                 self.numberscore.set("Your Score: " + str(self.score))
@@ -309,4 +329,10 @@ class PMGame(tk.Frame):
         self.text.set("")
         self.controller.show_frame("startwindow")
 
-   
+    ''' dont pay attention to this right here it means nothing but something but not right now
+        def sqltalk(self):
+        self.dbhighscore = sqlengine.mycursor.execute("SELECT highscore FROM REALTEST")
+        if int(self.dbhighscore) < self.highscore:
+            sqlengine.mycursor.execute("INSERT INTO REALTEST (Fname, HIGHSCORE) VALUES (%s,%s)",('lance',self.highscore))
+            sqlengine.db.commit()
+    '''

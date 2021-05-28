@@ -7,6 +7,7 @@ import AMGAME
 import PMGAME
 
 
+
 #this part is where the frames are staged and change
 class SampleApp(tk.Tk):
 
