@@ -26,12 +26,13 @@ class PMGame(tk.Frame):
         ws_Vancouver = ws['D']
         ws_Seattle = ws['E']
         ws_Other = ws['F']
-        self.SoCal = list(ws_SoCal)
-        self.NoCal = list(ws_NoCal)
-        self.Desert = list(ws_Desert)
-        self.Vancouver = list(ws_Vancouver)
-        self.Seattle = list(ws_Seattle)
-        self.Other = list(ws_Other)
+        self.SoCal = (ws_SoCal)
+        self.NoCal = (ws_NoCal)
+        self.Desert = (ws_Desert)
+        self.Vancouver = (ws_Vancouver)
+        self.Seattle = (ws_Seattle)
+        self.Other = (ws_Other)
+         
         self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
         self.choice = random.choice(self.fullList)
         

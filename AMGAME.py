@@ -309,8 +309,11 @@ class AMGame(tk.Frame):
         self.text.set("")
         self.controller.show_frame("startwindow")
 
+    '''
+    just dont worry about this but dont remove its something and nothing at the same time 
     def sqltalk(self):
             self.dbhighscore = sqlengine.mycursor.execute("SELECT highscore FROM REALTEST")
             if int(self.dbhighscore) < self.highscore:
                 sqlengine.mycursor.execute("INSERT INTO REALTEST (Fname, HIGHSCORE) VALUES (%s,%s)",('lance',self.highscore))
                 sqlengine.db.commit()
+    '''
