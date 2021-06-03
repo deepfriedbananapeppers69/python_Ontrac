@@ -12,7 +12,7 @@ class PMGame(tk.Frame):
         tk.Frame.__init__(self,master)
         # Global Variables
         # When calling these variables use .self first
-        wb = load_workbook('Book1.xlsx')
+        wb = load_workbook('PMSORTCODES.xlsx')
         ws = wb.active
         self.controller = controller
         self.lives = 3

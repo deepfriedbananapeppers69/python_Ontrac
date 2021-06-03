@@ -1,8 +1,10 @@
 import time
-import random 
+import random
 import tkinter as tk
 from tkinter import PhotoImage, font as tkfont
 from tkinter.constants import END, LEFT, RIGHT
+from openpyxl import workbook, load_workbook
+from openpyxl.utils import get_column_letter
 
 class AMGame(tk.Frame):
 
@@ -10,18 +12,44 @@ class AMGame(tk.Frame):
         tk.Frame.__init__(self,master)
         # Global Variables
         # When calling these variables use .self first 
+        wb = load_workbook('AMSORTINGZIPCODES.xlsx')
+        ws = wb.active
         self.controller = controller
         self.lives = 3
         self.score = 0
         self.yourscore = 0
         self.highscore = 0
         self.index = 0 
-        self.GreenBelt = ["98685","98686","98662","98607","98671","98682","98684","98664","98606","98604","98663","98665","98642","98625","98661","98660","98629","98674","98626","98632","98683","98532","98596","98591","98579","98589","98531","97230"]
-        self.BlueBelt = ["97216","97218","97238","97254","97212","97217","97233","97215","97213","97227","97232","97214","97206","97202","97266","97222","97086","97236","97220","97211","97267","7715 NE 33rd Dr. 97211","7911 NE 33rd Dr. 97211","3580 NW Brdwy 97232","12000 SE 82nd Ave 97086"]
-        self.RedBelt = ["All 970"]
-        self.YellowBelt = ["97224","97223","97221","97219","97210","97209","97208","97204","97205","97201","97225","97229","97106","97239","97240","97258","All 971"]
-        self.BlowBy = ["97220","97230","97211","97250","97252","97243"]
-        self.Other = ["Salem 973","Bend 977"]
+        self.GreenBelt = []
+        for col in ws['A']:
+             self.GreenBelt.append(col.value)
+        self.SoCal = [i for i in self.GreenBelt if i != None]
+
+        self.BlueBelt = []
+        for col in ws['B']:
+             self.BlueBelt.append(col.value)
+        self.SoCal = [i for i in self.BlueBelt if i != None]
+
+        self.RedBelt = []
+        for col in ws['C']:
+             self.RedBelt.append(col.value)
+        self.SoCal = [i for i in self.RedBelt if i != None]
+
+        self.YellowBelt = []
+        for col in ws['D']:
+             self.YellowBelt.append(col.value)
+        self.SoCal = [i for i in self.YellowBelt if i != None]
+
+        self.BlowBy = []
+        for col in ws['E']:
+             self.BlowBy.append(col.value)
+        self.SoCal = [i for i in self.BlowBy if i != None]
+
+        self.Other = []
+        for col in ws['F']:
+             self.Other.append(col.value)
+        self.SoCal = [i for i in self.Other if i != None]
+
         self.fullList = self.GreenBelt + self.BlueBelt + self.RedBelt + self.YellowBelt + self.BlowBy + self.Other
         self.choice = random.choice(self.fullList)
         
