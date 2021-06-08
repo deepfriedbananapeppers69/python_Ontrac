@@ -20,35 +20,36 @@ class AMGame(tk.Frame):
         self.yourscore = 0
         self.highscore = 0
         self.index = 0 
+        #this work for getting the values from the excel sheet and removes the none values 
         self.GreenBelt = []
         for col in ws['A']:
              self.GreenBelt.append(col.value)
-        self.SoCal = [i for i in self.GreenBelt if i != None]
+        self.GreenBelt = [i for i in self.GreenBelt if i != None]
 
         self.BlueBelt = []
         for col in ws['B']:
              self.BlueBelt.append(col.value)
-        self.SoCal = [i for i in self.BlueBelt if i != None]
+        self.BlueBelt = [i for i in self.BlueBelt if i != None]
 
         self.RedBelt = []
         for col in ws['C']:
              self.RedBelt.append(col.value)
-        self.SoCal = [i for i in self.RedBelt if i != None]
+        self.RedBelt = [i for i in self.RedBelt if i != None]
 
         self.YellowBelt = []
         for col in ws['D']:
              self.YellowBelt.append(col.value)
-        self.SoCal = [i for i in self.YellowBelt if i != None]
+        self.YellowBelt = [i for i in self.YellowBelt if i != None]
 
         self.BlowBy = []
         for col in ws['E']:
              self.BlowBy.append(col.value)
-        self.SoCal = [i for i in self.BlowBy if i != None]
+        self.BlowBy = [i for i in self.BlowBy if i != None]
 
         self.Other = []
         for col in ws['F']:
              self.Other.append(col.value)
-        self.SoCal = [i for i in self.Other if i != None]
+        self.Other = [i for i in self.Other if i != None]
 
         self.fullList = self.GreenBelt + self.BlueBelt + self.RedBelt + self.YellowBelt + self.BlowBy + self.Other
         self.choice = random.choice(self.fullList)

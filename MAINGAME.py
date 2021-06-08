@@ -1,8 +1,9 @@
-import time
-import random 
+
 import tkinter as tk
 from tkinter import PhotoImage, font as tkfont
 from tkinter.constants import END, LEFT, RIGHT
+from openpyxl import workbook, load_workbook
+from openpyxl.utils import get_column_letter
 import AMGAME
 import PMGAME
 
@@ -123,7 +124,7 @@ class pmwinwindow(tk.Frame):
         #self.label2.pack()
         self.Button1.pack()
 
-#this is the window for getting all zip code correct
+#this is the window for getting all zip codE correct///
 class amwinwindow(tk.Frame):
 
     def __init__(self,master,controller):
@@ -137,6 +138,44 @@ class amwinwindow(tk.Frame):
         self.label1.pack()
         #self.label2.pack()
         self.Button1.pack()
+
+#this is for collecting the users name 
+'''
+class loginpage(tk.Frame):
+
+    def __init__(self,master,controller):
+        tk.Frame.__init__(self,master)
+        self.controller = controller
+        self.Label4 = tk.Label(self, text='Enter your name')
+        self.Label4.pack(side=tk.TOP)
+        self.player_name = tk.Entry(self,bd=5)
+        self.player_name.pack(side=tk.TOP)
+        self.submitbutton = tk.Button(self,text='Submit',width=10,command=self.checkEntry)
+        self.submitbutton.pack()
+    def checkEntry(self):
+        wb = load_workbook('USER_BOOK.xlsx')
+        ws = wb.active
+        mycell = ws['A']
+        self.names = []
+        name = self.player_name.get()
+        # this get all the values from the name col and gets rid of nones
+        #------------------------------------------
+        for col in ws['A']:
+            self.names.append(col.value)
+        self.names = [i for i in self.names if i != None]
+        #------------------------------------------
+        if name not in self.names:
+            self.names.append(name)
+            
+        
+            
+
+        
+        
+
+
+'''
+
 
 # this runs the whole program 
 def main():
