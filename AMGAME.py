@@ -12,8 +12,8 @@ class AMGame(tk.Frame):
         tk.Frame.__init__(self,master)
         # Global Variables
         # When calling these variables use .self first 
-        wb = load_workbook('AMSORTINGZIPCODES.xlsx')
-        ws = wb.active
+        wb = load_workbook('MASTEREXCEL.xlsx')
+        wsAM = wb["AMZIPCODES"]
         self.controller = controller
         self.lives = 3
         self.score = 0
@@ -22,32 +22,32 @@ class AMGame(tk.Frame):
         self.index = 0 
         #this work for getting the values from the excel sheet and removes the none values 
         self.GreenBelt = []
-        for col in ws['A']:
+        for col in wsAM['A']:
              self.GreenBelt.append(col.value)
         self.GreenBelt = [i for i in self.GreenBelt if i != None]
 
         self.BlueBelt = []
-        for col in ws['B']:
+        for col in wsAM['B']:
              self.BlueBelt.append(col.value)
         self.BlueBelt = [i for i in self.BlueBelt if i != None]
 
         self.RedBelt = []
-        for col in ws['C']:
+        for col in wsAM['C']:
              self.RedBelt.append(col.value)
         self.RedBelt = [i for i in self.RedBelt if i != None]
 
         self.YellowBelt = []
-        for col in ws['D']:
+        for col in wsAM['D']:
              self.YellowBelt.append(col.value)
         self.YellowBelt = [i for i in self.YellowBelt if i != None]
 
         self.BlowBy = []
-        for col in ws['E']:
+        for col in wsAM['E']:
              self.BlowBy.append(col.value)
         self.BlowBy = [i for i in self.BlowBy if i != None]
 
         self.Other = []
-        for col in ws['F']:
+        for col in wsAM['F']:
              self.Other.append(col.value)
         self.Other = [i for i in self.Other if i != None]
 

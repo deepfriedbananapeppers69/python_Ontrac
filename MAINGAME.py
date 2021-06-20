@@ -2,10 +2,12 @@
 import tkinter as tk
 from tkinter import PhotoImage, font as tkfont
 from tkinter.constants import END, LEFT, RIGHT
+from typing import Text
 from openpyxl import workbook, load_workbook
 from openpyxl.utils import get_column_letter
 import AMGAME
 import PMGAME
+from PMGAME import *
 
 
 
@@ -26,7 +28,7 @@ class SampleApp(tk.Tk):
         #container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (startwindow,PMGAME.PMGame,pmendwindow,pmwinwindow,AMGAME.AMGame,amendwindow,amwinwindow):
+        for F in (startwindow,PMGAME.PMGame,pmendwindow,pmwinwindow,AMGAME.AMGame,amendwindow,amwinwindow,loginpage):
             page_name = F.__name__
             frame = F(master=container, controller=self)
             self.frames[page_name] = frame
@@ -36,14 +38,35 @@ class SampleApp(tk.Tk):
             # will be the one that is visible.
             frame.grid(row=0, column=0, sticky="nsew")
 
-        self.show_frame("startwindow")
+        self.show_frame("loginpage")
 
 
     def show_frame(self, page_name):
         '''Show a frame for the given page name'''
         frame = self.frames[page_name]
         frame.tkraise()
-  
+
+
+class loginpage(tk.Frame):
+
+    def __init__(self,master,controller):
+        tk.Frame.__init__(self,master)
+        self.controller = controller
+        self.strvar = tk.StringVar()
+        self.label1 = tk.Label(self,textvariable=self.strvar)
+        self.Label4 = tk.Label(self, text='Enter your name')
+        self.Label4.pack(side=tk.TOP)
+        self.label1.pack(side=tk.BOTTOM)
+        self.player_name = tk.Entry(self,bd=5)
+        self.player_name.pack(side=tk.TOP)
+        self.submitbutton = tk.Button(self,text='Submit',width=10,command=self.checkEntry)
+        self.submitbutton.pack()
+    def checkEntry(self):
+        self.name = self.player_name.get()
+        if self.name  != "":
+            self.controller.show_frame("startwindow")
+        else:
+            self.strvar.set("Please enter in a name")
 #this is the starting window
 class startwindow(tk.Frame):
 
@@ -109,20 +132,36 @@ class pmendwindow(tk.Frame):
         #self.label2.pack()
         self.Button1.pack()
 
-#this is the window for getting all area code correct
+#this is the window for getting all area code correct 
 class pmwinwindow(tk.Frame):
 
     def __init__(self,master,controller):
         tk.Frame.__init__(self,master)
-        #into = tracgame(master,controller)
+        self.info = PMGAME.PMGame(master,controller)
+        self.info2 = loginpage(master,controller)
         self.controller = controller
+        #into = tracgame(master,controller)
         #self.score = into.yourscore
         #self.label2 = tk.Label(self, text="Your score was " + str(self.score))
         self.label1 = tk.Label(self, text="good job you know all the area codes !!!!!!!!!!!!. You can Continue or Quit")
         self.Button1 = tk.Button(self,text="Continue",command=lambda: self.controller.show_frame("PMGame"),width=10,height=2,bg="green")
+        self.Button2 = tk.Button(self,text="No I wish to Quit",command=self.upload)
         self.label1.pack()
         #self.label2.pack()
         self.Button1.pack()
+        self.Button2.pack()
+    def upload(self):
+        date = self.info.now
+        score = self.info.score
+        wb = load_workbook('MASTEREXCEL.xlsx')
+        ws = wb['USERS']
+        ws.append({'B': score,'C': date})
+        wb.save("MASTEREXCEL.xlsx")
+        
+        
+        
+
+
 
 #this is the window for getting all zip codE correct///
 class amwinwindow(tk.Frame):
@@ -139,42 +178,6 @@ class amwinwindow(tk.Frame):
         #self.label2.pack()
         self.Button1.pack()
 
-#this is for collecting the users name 
-'''
-class loginpage(tk.Frame):
-
-    def __init__(self,master,controller):
-        tk.Frame.__init__(self,master)
-        self.controller = controller
-        self.Label4 = tk.Label(self, text='Enter your name')
-        self.Label4.pack(side=tk.TOP)
-        self.player_name = tk.Entry(self,bd=5)
-        self.player_name.pack(side=tk.TOP)
-        self.submitbutton = tk.Button(self,text='Submit',width=10,command=self.checkEntry)
-        self.submitbutton.pack()
-    def checkEntry(self):
-        wb = load_workbook('USER_BOOK.xlsx')
-        ws = wb.active
-        mycell = ws['A']
-        self.names = []
-        name = self.player_name.get()
-        # this get all the values from the name col and gets rid of nones
-        #------------------------------------------
-        for col in ws['A']:
-            self.names.append(col.value)
-        self.names = [i for i in self.names if i != None]
-        #------------------------------------------
-        if name not in self.names:
-            self.names.append(name)
-            
-        
-            
-
-        
-        
-
-
-'''
 
 
 # this runs the whole program 

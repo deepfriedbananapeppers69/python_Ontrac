@@ -1,4 +1,5 @@
-
+import time
+import MAINGAME
 import random 
 import tkinter as tk
 from tkinter import PhotoImage, font as tkfont
@@ -12,42 +13,52 @@ class PMGame(tk.Frame):
         tk.Frame.__init__(self,master)
         # Global Variables
         # When calling these variables use .self first
-        wb = load_workbook('PMSORTCODES.xlsx')
-        ws = wb.active
+        wb = load_workbook('MASTEREXCEL.xlsx')
+        wsPM= wb["PMCODES"]
+        wsUSER = wb["USERS"]
+        self.now = time.strftime("%x")
         self.controller = controller
         self.lives = 3
         self.score = 0
-        self.yourscore = 0
         self.highscore = 0
         self.index = 0
         #this work for getting the values from the excel sheet and removes the none values 
+
+        self.excelscores = []
+        for col in wsUSER['B']:
+            self.excelscores.append(col.value)
+        self.excelscores = [i for i in self.excelscores if i != 'SCORE']
+        self.excelscores = [i for i in self.excelscores if i != 'None']
+        if self.highscore > 0:
+            self.highscore = max(self.excelscores)
+
         self.SoCal = []
-        for col in ws['A']:
-             self.SoCal.append(col.value)
+        for col in wsPM['A']:
+            self.SoCal.append(col.value)
         self.SoCal = [i for i in self.SoCal if i != None]
 
         self.NoCal = []
-        for col in ws['B']:
+        for col in wsPM['B']:
             self.NoCal.append(col.value)
         self.NoCal = [i for i in self.NoCal if i != None]
 
         self.Desert = []
-        for col in ws['C']:
+        for col in wsPM['C']:
             self.Desert.append(col.value)
         self.Desert = [i for i in self.Desert if i != None]
         
         self.Vancouver = []
-        for col in ws['D']:
+        for col in wsPM['D']:
             self.Vancouver.append(col.value)
         self.Vancouver = [i for i in self.Vancouver if i != None]
 
         self.Seattle = []
-        for col in ws['E']:
+        for col in wsPM['E']:
             self.Seattle.append(col.value)
         self.Seattle = [i for i in self.Seattle if i != None]
 
         self.Other = []
-        for col in ws['F']:
+        for col in wsPM['F']:
             self.Other.append(col.value)
             self.Other = [i for i in self.Other if i != None]
 
@@ -117,7 +128,8 @@ class PMGame(tk.Frame):
         answer = self.choice
         if answer in self.NoCal:
             self.score =  self.score + 1
-            self.yourscore = self.score 
+            if int(self.score) >= int(self.highscore):
+                self.highscoretext.set("The current high score is: " + str(self.score))
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
             self.fullList.remove(answer)
@@ -125,8 +137,7 @@ class PMGame(tk.Frame):
                 self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.choice = random.choice(self.fullList)
                 self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
-                self.highscore = self.score
-                #self.sqltalk() 
+                self.winscore = self.score
                 self.controller.show_frame("pmwinwindow")
             else:
                 self.choice = random.choice(self.fullList)
@@ -138,7 +149,6 @@ class PMGame(tk.Frame):
                 self.score = 0
             if self.lives <= 0 or self.fullList == []:
                 self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
-                self.currentanswer = answer
                 self.lives = 3
                 self.score = 0
                 self.numberscore.set("Your Score: " + str(self.score))
@@ -157,7 +167,8 @@ class PMGame(tk.Frame):
         answer = self.choice
         if answer in self.SoCal:
             self.score =  self.score + 1
-            self.yourscore = self.score 
+            if int(self.score) >= int(self.highscore):
+                self.highscoretext.set("The current high score is: " + str(self.score))
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")          
             self.fullList.remove(answer)
@@ -165,6 +176,7 @@ class PMGame(tk.Frame):
                 self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.choice = random.choice(self.fullList)
                 self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                self.winscore = self.score
                 self.controller.show_frame("pmwinwindow")
             else:
                 self.choice = random.choice(self.fullList)
@@ -189,12 +201,13 @@ class PMGame(tk.Frame):
                 self.numberscore.set("Your Score: " + str(self.score))
                 self.text.set("Your Answer is: not correct")
                 self.Lives.set(" You have " + (str(self.lives)) + " Lives left")
-          
+        
     def DESERTCHECK (self):
         answer = self.choice
         if answer in self.Desert:
             self.score =  self.score + 1
-            self.yourscore = self.score 
+            if int(self.score) >= int(self.highscore):
+                self.highscoretext.set("The current high score is: " + str(self.score))
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
             self.fullList.remove(answer)
@@ -202,6 +215,7 @@ class PMGame(tk.Frame):
                 self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.choice = random.choice(self.fullList)
                 self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                self.winscore = self.score
                 self.controller.show_frame("pmwinwindow")
             else:
                 self.choice = random.choice(self.fullList)
@@ -231,7 +245,8 @@ class PMGame(tk.Frame):
         answer = self.choice
         if answer in self.Vancouver:
             self.score =  self.score + 1
-            self.yourscore = self.score 
+            if int(self.score) >= int(self.highscore):
+                self.highscoretext.set("The current high score is: " + str(self.score))
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
             self.fullList.remove(answer)
@@ -239,6 +254,7 @@ class PMGame(tk.Frame):
                 self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.choice = random.choice(self.fullList)
                 self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                self.winscore = self.score
                 self.controller.show_frame("pmwinwindow")
             else:
                 self.choice = random.choice(self.fullList)
@@ -263,12 +279,13 @@ class PMGame(tk.Frame):
                 self.numberscore.set("Your Score: " + str(self.score))
                 self.text.set("Your Answer is: not correct")
                 self.Lives.set(" You have " + (str(self.lives)) + " Lives left")
-                   
+                                  
     def SEATTLECHECK (self):
         answer = self.choice
         if answer in self.Seattle:
             self.score =  self.score + 1
-            self.yourscore = self.score 
+            if int(self.score) >= int(self.highscore):
+                self.highscoretext.set("The current high score is: " + str(self.score))
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
             self.fullList.remove(answer)
@@ -276,6 +293,7 @@ class PMGame(tk.Frame):
                 self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.choice = random.choice(self.fullList)
                 self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                self.winscore = self.score
                 self.controller.show_frame("pmwinwindow")
             else:
                 self.choice = random.choice(self.fullList)
@@ -305,7 +323,9 @@ class PMGame(tk.Frame):
         answer = self.choice
         if answer in self.Other:
             self.score =  self.score + 1
-            self.yourscore = self.score 
+            if int(self.score) >= int(self.highscore):
+                self.highscoretext.set("The current high score is: " + str(self.score))
+            self.winscore = self.score
             self.numberscore.set("Your Score: " + str(self.score))
             self.text.set("Your Answer is: correct")
             self.fullList.remove(answer)
@@ -313,6 +333,7 @@ class PMGame(tk.Frame):
                 self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.choice = random.choice(self.fullList)
                 self.pickchoice.set(" Where does this area code belong: " + str(self.choice))
+                self.yourscore = self.score
                 self.controller.show_frame("pmwinwindow")
             else:
                 self.choice = random.choice(self.fullList)
@@ -347,6 +368,8 @@ class PMGame(tk.Frame):
         self.Lives.set(" You have " + (str(self.lives)) + " Lives left")
         self.text.set("")
         self.controller.show_frame("startwindow")
+    
+    
 
     ''' dont pay attention to this right here it means nothing but something but not right now
         def sqltalk(self):
