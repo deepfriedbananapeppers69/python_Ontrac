@@ -23,6 +23,8 @@ class PMGame(tk.Frame):
         self.highscore = 0
         self.index = 0
         #this work for getting the values from the excel sheet and removes the none values 
+        self.info2 = MAINGAME.loginpage(master,controller)
+        self.name = self.info2.checkEntry()
 
         self.excelscores = []
         for col in wsUSER['B']:
@@ -99,22 +101,22 @@ class PMGame(tk.Frame):
         self.label1.pack(side=tk.TOP)
 
         self.socalbutton = tk.Button(self, text="So Cal",width= 10, height= 2, bg='gold' ,command=self.SOCALCHECK)
-        self.socalbutton.pack(side=LEFT, pady=2, padx=15)
+        self.socalbutton.pack(side=LEFT, pady=2, padx=45)
 
         self.nocalbutton = tk.Button(self, text="No Cal",width= 10, height= 2, fg='white' , bg='blue4' ,command=self.NOCALCHECK)
-        self.nocalbutton.pack(side=LEFT, pady=2, padx=15)
-
+        self.nocalbutton.pack(side=LEFT, pady=2, padx=45)
+        
         self.desertbutton = tk.Button(self, text="Desert",width= 10, height= 2, bg='gold',command=self.DESERTCHECK)
-        self.desertbutton.pack(side=LEFT, pady=2, padx=15)
+        self.desertbutton.pack(side=LEFT, pady=2, padx=45)
 
         self.seattlebutton = tk.Button(self, text="Seattle",width= 10, height= 2, fg='white' , bg='blue4' ,command=self.SEATTLECHECK)
-        self.seattlebutton.pack(side=RIGHT, pady=2, padx=15)
+        self.seattlebutton.pack(side=RIGHT, pady=2, padx=45)
 
         self.vanbutton = tk.Button(self, text="Vancouver",width= 10, height= 2, bg='gold' ,command=self.VANCOUVERCHECK)
-        self.vanbutton.pack(side=RIGHT, pady=2, padx=15)
+        self.vanbutton.pack(side=RIGHT, pady=2, padx=45)
 
         self.otherbutton = tk.Button(self, text="Other",width= 10, height= 2, fg='white' , bg='blue4' ,command=self.OTHERCHECK)
-        self.otherbutton.pack(side=RIGHT, pady=2, padx=15)
+        self.otherbutton.pack(side=RIGHT, pady=2, padx=45)
         
         self.menubutton = tk.Button(self,text="Return To Menu",command=self.MENURETURN)
         self.menubutton.pack()
@@ -226,6 +228,10 @@ class PMGame(tk.Frame):
             if self.score < 0:
                 self.score = 0
             if self.lives <= 0 or self.fullList == []:
+                wb = load_workbook('MASTEREXCEL.xlsx')
+                ws = wb['USERS']
+                ws.append({'A':self.name,'B': self.score,'C': self.now})
+                wb.save("MASTEREXCEL.xlsx")
                 self.fullList = self.SoCal + self.NoCal + self.Desert + self.Vancouver + self.Seattle + self.Other
                 self.lives = 3
                 self.score = 0

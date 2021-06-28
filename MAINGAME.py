@@ -60,7 +60,7 @@ class loginpage(tk.Frame):
         self.player_name = tk.Entry(self,bd=5)
         self.player_name.pack(side=tk.TOP)
         self.submitbutton = tk.Button(self,text='Submit',width=10,command=self.checkEntry)
-        self.submitbutton.pack()
+        self.submitbutton.pack(side=tk.TOP)
     def checkEntry(self):
         self.name = self.player_name.get()
         if self.name  != "":
@@ -183,7 +183,7 @@ class amwinwindow(tk.Frame):
 # this runs the whole program 
 def main():
     app = SampleApp()
-    app.geometry("800x400")
+    app.geometry("1800x900")
     app.mainloop()
 if __name__ == '__main__':
     main()
